@@ -1,19 +1,17 @@
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 const FloatingParticles = () => {
-  const [particles, setParticles] = useState([]);
-
-  useEffect(() => {
-    const newParticles = Array.from({ length: 15 }, (_, i) => ({
+  // Reducir número de partículas para mejor rendimiento
+  const particles = useMemo(() => 
+    Array.from({ length: 8 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 4 + 2,
-      emoji: ['🍞', '🥐', '🧁', '☕', '🍰', '🥖'][Math.floor(Math.random() * 6)]
-    }));
-    setParticles(newParticles);
-  }, []);
+      size: Math.random() * 3 + 2,
+      emoji: ['🍞', '🥐', '☕', '🍰'][Math.floor(Math.random() * 4)]
+    })), []
+  );
 
   return (
     <div className="floating-particles">
@@ -27,14 +25,14 @@ const FloatingParticles = () => {
             fontSize: `${particle.size}px`
           }}
           animate={{
-            y: [-20, 20, -20],
-            x: [-10, 10, -10],
-            rotate: [0, 180, 360]
+            y: [-15, 15, -15],
+            x: [-8, 8, -8]
           }}
           transition={{
-            duration: Math.random() * 10 + 15,
+            duration: Math.random() * 8 + 12,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
+            delay: particle.id * 0.5
           }}
         >
           {particle.emoji}
@@ -48,15 +46,25 @@ const ScrollProgress = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
+    
     const updateScrollProgress = () => {
       const scrollPx = document.documentElement.scrollTop;
       const winHeightPx = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = scrollPx / winHeightPx;
       setScrollProgress(scrolled);
+      ticking = false;
     };
 
-    window.addEventListener('scroll', updateScrollProgress);
-    return () => window.removeEventListener('scroll', updateScrollProgress);
+    const requestTick = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollProgress);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', requestTick, { passive: true });
+    return () => window.removeEventListener('scroll', requestTick);
   }, []);
 
   return (

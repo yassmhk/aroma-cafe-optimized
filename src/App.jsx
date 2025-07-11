@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { FaClock, FaMapMarkerAlt, FaPhone, FaInstagram, FaFacebook, FaTwitter, FaBreadSlice, FaCookie, FaCoffee, FaStar, FaAward, FaHeart, FaLeaf, FaBars, FaTimes } from 'react-icons/fa'
 import { IoRestaurant, IoCall, IoMail, IoLocationSharp } from 'react-icons/io5'
 import { MdVerified, MdLocalShipping } from 'react-icons/md'
@@ -9,11 +9,12 @@ import './App.css'
 
 function App() {
   const { scrollYProgress } = useScroll()
-  const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.8])
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const testimonials = [
+  // Memoizar datos estáticos para evitar re-renderizados
+  const testimonials = useMemo(() => [
     {
       name: "María González",
       text: "Los mejores croissants de la ciudad. Vengo aquí desde hace 10 años y nunca me defraudan.",
@@ -32,14 +33,45 @@ function App() {
       rating: 5,
       image: "👩‍🎨"
     }
-  ]
+  ], [])
 
-  const features = [
+  const features = useMemo(() => [
     { icon: <FaLeaf />, title: "100% Natural", desc: "Solo ingredientes orgánicos" },
     { icon: <MdVerified />, title: "Calidad Premium", desc: "Estándares internacionales" },
     { icon: <MdLocalShipping />, title: "Delivery Gratis", desc: "Envíos en la ciudad" },
     { icon: <FaAward />, title: "Premiados", desc: "Mejor panadería 2024" }
-  ]
+  ], [])
+
+  const products = useMemo(() => [
+    { 
+      icon: <FaBreadSlice />, 
+      name: "Panes Artesanales", 
+      desc: "Horneados frescos cada día con masa madre tradicional",
+      price: "Desde $3.50",
+      popular: true
+    },
+    { 
+      icon: <FaCookie />, 
+      name: "Pasteles & Tartas", 
+      desc: "Dulces tentaciones con ingredientes premium y decoración artística",
+      price: "Desde $25.00",
+      popular: false
+    },
+    { 
+      icon: <FaCoffee />, 
+      name: "Croissants", 
+      desc: "Crujientes por fuera, mantecosos por dentro, técnica francesa auténtica",
+      price: "Desde $4.00",
+      popular: true
+    },
+    { 
+      icon: <IoRestaurant />, 
+      name: "Dulces Variados", 
+      desc: "Perfectos para acompañar tu café matutino o merienda",
+      price: "Desde $2.50",
+      popular: false
+    }
+  ], [])
 
   return (
     <div className="app">
@@ -49,9 +81,9 @@ function App() {
       {/* Header/Navigation */}
       <motion.header 
         className="header"
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="container">
           <motion.div 
@@ -154,17 +186,7 @@ function App() {
         id="inicio"
       >
         <div className="hero-background">
-          <motion.div 
-            className="hero-bg-overlay"
-            animate={{ 
-              background: [
-                "linear-gradient(135deg, rgba(139,69,19,0.8) 0%, rgba(244,162,97,0.8) 100%)",
-                "linear-gradient(135deg, rgba(139,69,19,0.9) 0%, rgba(231,111,81,0.8) 100%)",
-                "linear-gradient(135deg, rgba(139,69,19,0.8) 0%, rgba(244,162,97,0.8) 100%)"
-              ]
-            }}
-            transition={{ duration: 8, repeat: Infinity }}
-          />
+          {/* Removida la animación de background que causaba parpadeo */}
         </div>
         
         <div className="container hero-container">
@@ -253,10 +275,9 @@ function App() {
             <motion.div 
               className="floating-elements"
               animate={{ 
-                y: [-20, 20, -20],
-                rotate: [0, 5, -5, 0]
+                y: [-10, 10, -10]
               }}
-              transition={{ duration: 6, repeat: Infinity }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
               <div className="floating-bread">🥖</div>
               <div className="floating-croissant">🥐</div>
@@ -308,44 +329,15 @@ function App() {
           </motion.div>
           
           <div className="products-grid enhanced">
-            {[
-              { 
-                icon: <FaBreadSlice />, 
-                name: "Panes Artesanales", 
-                desc: "Horneados frescos cada día con masa madre tradicional",
-                price: "Desde $3.50",
-                popular: true
-              },
-              { 
-                icon: <FaCookie />, 
-                name: "Pasteles & Tartas", 
-                desc: "Dulces tentaciones con ingredientes premium y decoración artística",
-                price: "Desde $25.00",
-                popular: false
-              },
-              { 
-                icon: <FaCoffee />, 
-                name: "Croissants", 
-                desc: "Crujientes por fuera, mantecosos por dentro, técnica francesa auténtica",
-                price: "Desde $4.00",
-                popular: true
-              },
-              { 
-                icon: <IoRestaurant />, 
-                name: "Dulces Variados", 
-                desc: "Perfectos para acompañar tu café matutino o merienda",
-                price: "Desde $2.50",
-                popular: false
-              }
-            ].map((product, index) => (
+            {products.map((product, index) => (
               <motion.div 
                 key={index}
                 className={`product-card enhanced ${product.popular ? 'popular' : ''}`}
-                initial={{ y: 50, opacity: 0 }}
+                initial={{ y: 30, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                whileHover={{ y: -15, rotateY: 5 }}
-                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
+                whileHover={{ y: -8 }}
+                viewport={{ once: true, margin: "-50px" }}
               >
                 {product.popular && (
                   <motion.div 
@@ -531,11 +523,11 @@ function App() {
               <motion.div
                 key={index}
                 className="testimonial-card"
-                initial={{ y: 50, opacity: 0, rotateY: 45 }}
-                whileInView={{ y: 0, opacity: 1, rotateY: 0 }}
-                transition={{ delay: index * 0.2, duration: 0.8 }}
-                whileHover={{ y: -10, rotateY: 5 }}
-                viewport={{ once: true }}
+                initial={{ y: 30, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
+                whileHover={{ y: -5 }}
+                viewport={{ once: true, margin: "-50px" }}
               >
                 <div className="testimonial-header">
                   <div className="testimonial-avatar">{testimonial.image}</div>
@@ -724,15 +716,8 @@ function App() {
 
       {/* Footer */}
       <footer className="footer enhanced">
-        <div className="footer-background">
-          <motion.div 
-            className="footer-particles"
-            animate={{ 
-              backgroundPosition: ["0% 0%", "100% 100%"]
-            }}
-            transition={{ duration: 20, repeat: Infinity }}
-          />
-        </div>
+        {/* Simplificado el footer background para mejor performance */}
+        <div className="footer-background"></div>
         
         <div className="container">
           <div className="footer-content enhanced">
@@ -810,8 +795,8 @@ function App() {
                 <motion.a 
                   href="#" 
                   className="social-link"
-                  whileHover={{ scale: 1.2, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <FaInstagram />
                   <span>Instagram</span>
@@ -819,8 +804,8 @@ function App() {
                 <motion.a 
                   href="#" 
                   className="social-link"
-                  whileHover={{ scale: 1.2, rotate: -5 }}
-                  whileTap={{ scale: 0.9 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <FaFacebook />
                   <span>Facebook</span>
@@ -828,8 +813,8 @@ function App() {
                 <motion.a 
                   href="#" 
                   className="social-link"
-                  whileHover={{ scale: 1.2, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <FaTwitter />
                   <span>Twitter</span>
