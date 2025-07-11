@@ -286,13 +286,14 @@ function App() {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.8 }}
             >
-              <motion.button 
+              <motion.a 
+                href="#productos"
                 className="cta-button primary"
                 whileHover={{ scale: 1.05, boxShadow: "0 15px 40px rgba(244, 162, 97, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
               >
                 <FaHeart /> Ver Productos
-              </motion.button>
+              </motion.a>
               <motion.button 
                 className="cta-button secondary"
                 whileHover={{ scale: 1.05 }}
@@ -402,25 +403,25 @@ function App() {
               <motion.div 
                 key={index}
                 className={`product-card enhanced ${product.popular ? 'popular' : ''}`}
-                initial={{ y: 20, opacity: 0, scale: 0.95 }}
+                initial={{ y: 10, opacity: 0.3, scale: 0.98 }}
                 whileInView={{ y: 0, opacity: 1, scale: 1 }}
                 transition={{ 
-                  delay: index * 0.08, 
-                  duration: 0.4, 
+                  delay: index * 0.05, 
+                  duration: 0.3, 
                   ease: [0.25, 0.46, 0.45, 0.94],
                   type: "tween"
                 }}
                 whileHover={{ y: -6, scale: 1.02 }}
-                viewport={{ once: true, margin: "-30px" }}
+                viewport={{ once: true, margin: "-50px" }}
               >
                 {product.popular && (
                   <motion.div 
                     className="popular-badge"
-                    initial={{ scale: 0, opacity: 0 }}
+                    initial={{ scale: 0.8, opacity: 0.5 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ 
-                      delay: 0.4 + index * 0.08,
-                      duration: 0.3,
+                      delay: 0.2 + index * 0.05,
+                      duration: 0.25,
                       type: "spring",
                       stiffness: 200,
                       damping: 15
@@ -633,16 +634,16 @@ function App() {
               <motion.div
                 key={index}
                 className="testimonial-card"
-                initial={{ y: 20, opacity: 0, scale: 0.95 }}
+                initial={{ y: 10, opacity: 0.3, scale: 0.98 }}
                 whileInView={{ y: 0, opacity: 1, scale: 1 }}
                 transition={{ 
-                  delay: index * 0.1, 
-                  duration: 0.4, 
+                  delay: index * 0.06, 
+                  duration: 0.3, 
                   ease: [0.25, 0.46, 0.45, 0.94],
                   type: "tween"
                 }}
                 whileHover={{ y: -3, scale: 1.02 }}
-                viewport={{ once: true, margin: "-20px" }}
+                viewport={{ once: true, margin: "-40px" }}
               >
                 <div className="testimonial-header">
                   <div className="testimonial-avatar">{testimonial.image}</div>
