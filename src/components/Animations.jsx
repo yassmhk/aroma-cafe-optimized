@@ -78,7 +78,7 @@ const ScrollProgress = () => {
   );
 };
 
-const AnimatedCounter = ({ end, duration = 2000, prefix = "", suffix = "" }) => {
+const AnimatedCounter = ({ end, duration = 1200, prefix = "", suffix = "" }) => {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
 
@@ -88,27 +88,45 @@ const AnimatedCounter = ({ end, duration = 2000, prefix = "", suffix = "" }) => 
     let startTime;
     const startCount = 0;
     const endCount = parseInt(end);
+    let animationFrame;
 
     const updateCount = (timestamp) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      const currentCount = Math.floor(progress * (endCount - startCount) + startCount);
+      
+      // Usar easing más suave y menos agresivo
+      const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+      const currentCount = Math.round(easeOutCubic * (endCount - startCount) + startCount);
+      
       setCount(currentCount);
 
       if (progress < 1) {
-        requestAnimationFrame(updateCount);
+        animationFrame = requestAnimationFrame(updateCount);
       }
     };
 
-    requestAnimationFrame(updateCount);
+    animationFrame = requestAnimationFrame(updateCount);
+
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
   }, [hasAnimated, end, duration]);
 
   return (
     <motion.span
+      className="animated-counter"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      onViewportEnter={() => setHasAnimated(true)}
-      viewport={{ once: true }}
+      onViewportEnter={() => !hasAnimated && setHasAnimated(true)}
+      viewport={{ once: true, margin: "-80px" }}
+      style={{
+        display: 'inline-block',
+        minWidth: '3ch',
+        textAlign: 'center',
+        fontVariantNumeric: 'tabular-nums'
+      }}
     >
       {prefix}{count}{suffix}
     </motion.span>

@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useState, useMemo } from 'react'
-import { FaClock, FaMapMarkerAlt, FaPhone, FaInstagram, FaFacebook, FaTwitter, FaBreadSlice, FaCookie, FaCoffee, FaStar, FaAward, FaHeart, FaLeaf, FaBars, FaTimes } from 'react-icons/fa'
+import { FaClock, FaMapMarkerAlt, FaPhone, FaInstagram, FaFacebook, FaTwitter, FaBreadSlice, FaCookie, FaCoffee, FaStar, FaAward, FaHeart, FaLeaf, FaBars, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { IoRestaurant, IoCall, IoMail, IoLocationSharp } from 'react-icons/io5'
 import { MdVerified, MdLocalShipping } from 'react-icons/md'
 import ProductImage from './components/ProductImage'
@@ -12,6 +12,7 @@ function App() {
   const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.8])
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   // Memoizar datos estáticos para evitar re-renderizados
   const testimonials = useMemo(() => [
@@ -48,30 +49,86 @@ function App() {
       name: "Panes Artesanales", 
       desc: "Horneados frescos cada día con masa madre tradicional",
       price: "Desde $3.50",
-      popular: true
+      popular: true,
+      image: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=400&h=250&fit=crop&crop=center&auto=format&q=80"
     },
     { 
       icon: <FaCookie />, 
       name: "Pasteles & Tartas", 
       desc: "Dulces tentaciones con ingredientes premium y decoración artística",
       price: "Desde $25.00",
-      popular: false
+      popular: false,
+      image: "https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=400&h=250&fit=crop&crop=center&auto=format&q=80"
     },
     { 
       icon: <FaCoffee />, 
       name: "Croissants", 
       desc: "Crujientes por fuera, mantecosos por dentro, técnica francesa auténtica",
       price: "Desde $4.00",
-      popular: true
+      popular: true,
+      image: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=400&h=250&fit=crop&crop=center&auto=format&q=80"
     },
     { 
       icon: <IoRestaurant />, 
       name: "Dulces Variados", 
       desc: "Perfectos para acompañar tu café matutino o merienda",
       price: "Desde $2.50",
-      popular: false
+      popular: false,
+      image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=250&fit=crop&crop=center&auto=format&q=80"
+    },
+    { 
+      icon: <FaHeart />, 
+      name: "Café Premium", 
+      desc: "Granos seleccionados de origen, tostados artesanalmente para el sabor perfecto",
+      price: "Desde $8.00",
+      popular: false,
+      image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=250&fit=crop&crop=center&auto=format&q=80"
+    },
+    { 
+      icon: <FaAward />, 
+      name: "Especialidades", 
+      desc: "Creaciones únicas del chef, productos de temporada y ediciones limitadas",
+      price: "Desde $6.00",
+      popular: true,
+      image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&h=250&fit=crop&crop=center&auto=format&q=80"
     }
   ], [])
+
+  const galleryImages = useMemo(() => [
+    {
+      src: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&h=450&fit=crop&crop=center&auto=format&q=80",
+      title: "Interior Acogedor",
+      description: "Ambiente cálido y familiar"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=450&fit=crop&crop=center&auto=format&q=80",
+      title: "Vitrina Principal", 
+      description: "Exhibición de especialidades"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=450&fit=crop&crop=center&auto=format&q=80",
+      title: "Área de Mesas",
+      description: "Perfecto para reuniones"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=450&fit=crop&crop=center&auto=format&q=80",
+      title: "Mostrador Principal",
+      description: "Servicio y atención"
+    },
+    {
+      src: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&h=450&fit=crop&crop=center&auto=format&q=80",
+      title: "Vitrinas Refrigeradas",
+      description: "Frescura garantizada"
+    }
+  ], [])
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length)
+  }
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length)
+  }
 
   return (
     <div className="app">
@@ -244,45 +301,57 @@ function App() {
                 <IoCall /> Llamar Ahora
               </motion.button>
             </motion.div>
-
-            <motion.div 
-              className="hero-stats"
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.9, duration: 0.8 }}
-            >
-              <div className="stat-item">
-                <span className="stat-number">5000+</span>
-                <span className="stat-label">Clientes Felices</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">50+</span>
-                <span className="stat-label">Productos Únicos</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">38+</span>
-                <span className="stat-label">Años de Experiencia</span>
-              </div>
-            </motion.div>
           </div>
           
           <motion.div 
-            className="hero-image"
+            className="hero-visual"
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.4, duration: 1 }}
           >
-            <motion.div 
-              className="floating-elements"
-              animate={{ 
-                y: [-10, 10, -10]
-              }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <div className="floating-bread">🥖</div>
-              <div className="floating-croissant">🥐</div>
-              <div className="floating-cake">🎂</div>
-            </motion.div>
+            {/* Nuevo diseño visual más elegante */}
+            <div className="hero-image-container">
+              <motion.div 
+                className="hero-main-image"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=600&fit=crop&crop=center&auto=format&q=80"
+                  alt="Productos artesanales de Aroma Café"
+                  loading="eager"
+                />
+                <div className="image-gradient-overlay"></div>
+              </motion.div>
+              
+              {/* Decorative elements */}
+              <motion.div 
+                className="floating-badge badge-1"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <FaAward />
+                <span>Premio 2024</span>
+              </motion.div>
+              
+              <motion.div 
+                className="floating-badge badge-2"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              >
+                <MdVerified />
+                <span>100% Natural</span>
+              </motion.div>
+              
+              <motion.div 
+                className="floating-badge badge-3"
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              >
+                <FaHeart />
+                <span>38 años</span>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </motion.section>
@@ -333,40 +402,58 @@ function App() {
               <motion.div 
                 key={index}
                 className={`product-card enhanced ${product.popular ? 'popular' : ''}`}
-                initial={{ y: 30, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.5, ease: "easeOut" }}
-                whileHover={{ y: -8 }}
-                viewport={{ once: true, margin: "-50px" }}
+                initial={{ y: 20, opacity: 0, scale: 0.95 }}
+                whileInView={{ y: 0, opacity: 1, scale: 1 }}
+                transition={{ 
+                  delay: index * 0.08, 
+                  duration: 0.4, 
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                  type: "tween"
+                }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                viewport={{ once: true, margin: "-30px" }}
               >
                 {product.popular && (
                   <motion.div 
                     className="popular-badge"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.5 + index * 0.1 }}
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ 
+                      delay: 0.4 + index * 0.08,
+                      duration: 0.3,
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 15
+                    }}
                   >
                     <FaStar /> Más Popular
                   </motion.div>
                 )}
                 
-                <ProductImage product={product.name} className="product-main-image" />
+                {product.image && (
+                  <div className="product-image">
+                    <img src={product.image} alt={product.name} />
+                  </div>
+                )}
                 
                 <div className="product-content">
                   <div className="product-header">
                     <div className="product-icon">{product.icon}</div>
-                    <div className="product-price">{product.price}</div>
+                    <h3>{product.name}</h3>
                   </div>
-                  <h3>{product.name}</h3>
-                  <p>{product.desc}</p>
                   
-                  <motion.button 
-                    className="product-btn"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Ver Detalles
-                  </motion.button>
+                  <p className="product-description">{product.desc}</p>
+                  
+                  <div className="product-footer">
+                    <div className="product-price">{product.price}</div>
+                    <motion.button 
+                      className="product-btn-enhanced"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Ver Detalles
+                    </motion.button>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -458,42 +545,65 @@ function App() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <div className="about-image-grid">
+              <div className="about-image-showcase">
                 <motion.div 
-                  className="about-image main"
-                  whileHover={{ scale: 1.05 }}
+                  className="showcase-main-image"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <img 
-                    src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=400&fit=crop&crop=center&auto=format&q=80"
-                    alt="Maestros panaderos trabajando"
+                    src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop&crop=center&auto=format&q=80"
+                    alt="Maestros panaderos trabajando con masa tradicional"
                     loading="lazy"
                   />
-                  <div className="image-overlay">
-                    <span>👨‍🍳 Nuestros Maestros Panaderos</span>
+                  <div className="showcase-overlay">
+                    <div className="showcase-badge">
+                      <FaAward />
+                      <span>Técnicas Tradicionales</span>
+                    </div>
                   </div>
                 </motion.div>
-                <motion.div 
-                  className="about-image secondary"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ delay: 0.1 }}
-                >
-                  <img 
-                    src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&h=300&fit=crop&crop=center&auto=format&q=80"
-                    alt="Ingredientes frescos"
-                    loading="lazy"
-                  />
-                </motion.div>
-                <motion.div 
-                  className="about-image tertiary"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <img 
-                    src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=300&h=300&fit=crop&crop=center&auto=format&q=80"
-                    alt="Horno tradicional"
-                    loading="lazy"
-                  />
-                </motion.div>
+                
+                <div className="showcase-details">
+                  <motion.div 
+                    className="detail-card"
+                    whileHover={{ y: -5 }}
+                  >
+                    <div className="detail-icon">
+                      <FaLeaf />
+                    </div>
+                    <div className="detail-content">
+                      <h4>Ingredientes Naturales</h4>
+                      <p>Solo los mejores ingredientes orgánicos seleccionados</p>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="detail-card"
+                    whileHover={{ y: -5 }}
+                  >
+                    <div className="detail-icon">
+                      <FaCoffee />
+                    </div>
+                    <div className="detail-content">
+                      <h4>Recetas Familiares</h4>
+                      <p>Transmitidas de generación en generación</p>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="detail-card"
+                    whileHover={{ y: -5 }}
+                  >
+                    <div className="detail-icon">
+                      <MdVerified />
+                    </div>
+                    <div className="detail-content">
+                      <h4>Calidad Certificada</h4>
+                      <p>Estándares internacionales de excelencia</p>
+                    </div>
+                  </motion.div>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -523,11 +633,16 @@ function App() {
               <motion.div
                 key={index}
                 className="testimonial-card"
-                initial={{ y: 30, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
-                whileHover={{ y: -5 }}
-                viewport={{ once: true, margin: "-50px" }}
+                initial={{ y: 20, opacity: 0, scale: 0.95 }}
+                whileInView={{ y: 0, opacity: 1, scale: 1 }}
+                transition={{ 
+                  delay: index * 0.1, 
+                  duration: 0.4, 
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                  type: "tween"
+                }}
+                whileHover={{ y: -3, scale: 1.02 }}
+                viewport={{ once: true, margin: "-20px" }}
               >
                 <div className="testimonial-header">
                   <div className="testimonial-avatar">{testimonial.image}</div>
@@ -708,6 +823,75 @@ function App() {
                     <span>Acceso Universal</span>
                   </motion.div>
                 </div>
+                
+                {/* Galería de fotos del local */}
+                <motion.div 
+                  className="local-gallery-stacked"
+                  initial={{ y: 20, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  viewport={{ once: true }}
+                >
+                  <h4 className="gallery-title">Conoce Nuestro Local</h4>
+                  <div className="gallery-stack-container">
+                    <div className="gallery-stack">
+                      {galleryImages.map((image, index) => (
+                        <motion.div
+                          key={index}
+                          className={`gallery-card ${index === currentImageIndex ? 'active' : ''}`}
+                          style={{
+                            zIndex: galleryImages.length - Math.abs(index - currentImageIndex),
+                            transform: `translateX(${(index - currentImageIndex) * 20}px) translateY(${Math.abs(index - currentImageIndex) * 10}px)`,
+                            opacity: Math.abs(index - currentImageIndex) <= 2 ? 1 - Math.abs(index - currentImageIndex) * 0.3 : 0
+                          }}
+                          animate={{
+                            scale: index === currentImageIndex ? 1 : 0.9,
+                            rotate: index === currentImageIndex ? 0 : (index - currentImageIndex) * 2
+                          }}
+                          transition={{ duration: 0.4, ease: "easeOut" }}
+                        >
+                          <img 
+                            src={image.src}
+                            alt={image.title}
+                          />
+                          <div className="gallery-card-info">
+                            <h5>{image.title}</h5>
+                            <p>{image.description}</p>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                    
+                    <div className="gallery-controls">
+                      <motion.button
+                        className="gallery-btn prev"
+                        onClick={prevImage}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <FaChevronLeft />
+                      </motion.button>
+                      <motion.button
+                        className="gallery-btn next"
+                        onClick={nextImage}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <FaChevronRight />
+                      </motion.button>
+                    </div>
+                    
+                    <div className="gallery-indicators">
+                      {galleryImages.map((_, index) => (
+                        <button
+                          key={index}
+                          className={`indicator ${index === currentImageIndex ? 'active' : ''}`}
+                          onClick={() => setCurrentImageIndex(index)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>
