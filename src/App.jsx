@@ -1,4 +1,4 @@
-import { useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { useState } from 'react'
 import { FaClock, FaMapMarkerAlt, FaPhone, FaInstagram, FaFacebook, FaTwitter, FaBreadSlice, FaCookie, FaCoffee, FaStar, FaAward, FaHeart, FaLeaf, FaBars, FaTimes } from 'react-icons/fa'
 import { IoRestaurant, IoCall, IoMail, IoLocationSharp } from 'react-icons/io5'
