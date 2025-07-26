@@ -1,0 +1,96 @@
+.testimonials {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.section-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+}
+.testimonial-card {
+  font-family: inherit;
+  opacity: 1;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+.testimonial-info h4 {
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.testimonial-card blockquote {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-light);
+  font-style: italic;
+  margin: 0;
+}
+/* =============================
+   TESTIMONIALS SECTION
+   ============================= */
+.testimonials {
+  padding: 6rem 0;
+  background: var(--gradient-light);
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+}
+.testimonial-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 25px;
+  box-shadow: 0 15px 50px var(--shadow-light);
+  transition: all 0.4s ease;
+  border: 1px solid var(--border-light);
+  opacity: 1;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+.testimonial-card:hover {
+  box-shadow: 0 25px 70px var(--shadow-medium);
+  border-color: var(--secondary-color);
+}
+.testimonial-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.testimonial-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--light-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  border: 3px solid var(--secondary-color);
+}
+.testimonial-info h4 {
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.testimonial-rating {
+  display: flex;
+  gap: 0.2rem;
+}
+.star {
+  color: #ffd700;
+  font-size: 1.2rem;
+}
+.testimonial-card blockquote {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-light);
+  font-style: italic;
+  margin: 0;
+}

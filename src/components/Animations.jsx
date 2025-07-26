@@ -82,6 +82,11 @@ const AnimatedCounter = ({ end, duration = 1200, prefix = "", suffix = "" }) => 
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
 
+  // Calcular el ancho necesario basado en el valor final - ajustado para números más grandes
+  const finalValue = String(prefix + end + suffix);
+  const calculatedWidth = Math.max(finalValue.length * 0.55, 3);
+  const finalWidth = `${calculatedWidth}ch`;
+
   useEffect(() => {
     if (!hasAnimated) return;
 
@@ -123,9 +128,11 @@ const AnimatedCounter = ({ end, duration = 1200, prefix = "", suffix = "" }) => 
       viewport={{ once: true, margin: "-80px" }}
       style={{
         display: 'inline-block',
-        minWidth: '3ch',
+        minWidth: finalWidth,
         textAlign: 'center',
-        fontVariantNumeric: 'tabular-nums'
+        fontVariantNumeric: 'tabular-nums',
+        overflow: 'visible',
+        whiteSpace: 'nowrap'
       }}
     >
       {prefix}{count}{suffix}

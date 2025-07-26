@@ -1,0 +1,109 @@
+.section-title {
+  font-size: 2.5rem;
+  color: #7c4d2a;
+  font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.features-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.feature-card {
+  background: #fff9f4;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 12px rgba(124,77,42,0.10);
+  padding: 2rem 1.5rem;
+  max-width: 300px;
+  text-align: center;
+  font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+}
+.feature-card h3 {
+  font-size: 1.15rem;
+  color: #7c4d2a;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+.feature-card p {
+  color: #5c3a1a;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+.section-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+}
+.section-title, .feature-card h3, .feature-card p {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.section-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+}
+.feature-card h3 {
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.feature-card p {
+  color: var(--text-light);
+  font-size: 1rem;
+}
+/* =============================
+   FEATURES SECTION
+   ============================= */
+.features {
+  padding: 4rem 0;
+  background: white;
+  border-bottom: 1px solid var(--border-light);
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+.feature-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+}
+.feature-card:hover {
+  border-color: var(--secondary-color);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px var(--shadow-light);
+}
+.feature-icon {
+  font-size: 3rem;
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+.feature-card h3 {
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.feature-card p {
+  color: var(--text-light);
+  font-size: 1rem;
+}

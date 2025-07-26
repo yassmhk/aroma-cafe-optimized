@@ -1,0 +1,8 @@
+/* =============================
+   CONTENEDOR PRINCIPAL
+   ============================= */
+.app {
+  min-height: 100vh;
+  position: relative;
+  transform: translateZ(0);
+}

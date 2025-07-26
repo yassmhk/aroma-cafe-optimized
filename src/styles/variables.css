@@ -1,0 +1,25 @@
+/* Enhanced Variables */
+:root {
+  --primary-color: #8b4513;
+  --primary-light: #a0522d;
+  --primary-dark: #654321;
+  --secondary-color: #f4a261;
+  --secondary-light: #f6b177;
+  --secondary-dark: #e18f4a;
+  --accent-color: #e76f51;
+  --accent-light: #ea8167;
+  --light-bg: #f8f4e6;
+  --lighter-bg: #fefcf5;
+  --white: #ffffff;
+  --text-dark: #2c1810;
+  --text-medium: #5a3c28;
+  --text-light: #8b7355;
+  --text-lighter: #a68b5b;
+  --border-light: #e8e0d1;
+  --shadow-light: rgba(139, 69, 19, 0.1);
+  --shadow-medium: rgba(139, 69, 19, 0.2);
+  --shadow-dark: rgba(139, 69, 19, 0.3);
+  --gradient-warm: linear-gradient(135deg, #8b4513 0%, #f4a261 50%, #e76f51 100%);
+  --gradient-light: linear-gradient(135deg, #fefcf5 0%, #f8f4e6 100%);
+  --gradient-overlay: linear-gradient(135deg, rgba(139,69,19,0.9) 0%, rgba(244,162,97,0.8) 100%);
+}
